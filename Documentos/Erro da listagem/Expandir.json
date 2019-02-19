@@ -1,0 +1,98 @@
+https: //api.dev1.ciee.org.br/student/vagas/candidatos/pesquisar/377079?longitudeRef=-46.603659300000004&latitudeRef=-23.57824459999999
+  {
+    "id": 377079,
+    "codigoNome": "LTA78479",
+    "dataNascimento": "2002-06-06",
+    "distanciaAprox": "",
+    "favorito": false,
+    "escolaridade": {
+      "nomeCurso": "TECNICO EM MEIO AMBIENTE - MOD.",
+      "codigoEscola": 168,
+      "nomeEscola": null,
+      "duracao": 3,
+      "situacaoEscolaridade": "CURSANDO",
+      "descricaoPeriodo": "Semestral",
+      "periodoAtual": 1,
+      "periodoEstudo": "Noite",
+      "conclusaoPrevista": null,
+      "dataConclusao": null,
+      "statusCurso": "CURSANDO",
+      "nivelEscolaridade": "TE",
+      "horario": null
+    },
+    "relevanciaIdioma": null,
+    "relevanciaConhecimento": null,
+    "resumoArea": null,
+    "localidade": null,
+    "dataAlteracao": null,
+    "rotas": null,
+    "estudanteIndicadoPCD": null,
+    "tipoDeficiencia": null,
+    "nomeEstudante": "LUANA DE SOUZA BERTEVELLI",
+    "nomeSocialEstudante": null,
+    "endereco": {
+      "cep": "04184000",
+      "rua": "R PRF ARNALDO JOAO SEMERARO",
+      "numero": "660",
+      "complemento": "AP 4 BL 2",
+      "bairro": "JARDIM SANTA EMILIA",
+      "municipio": "São Paulo",
+      "uf": "SP"
+    },
+    "distanciaCalculada": 0.0,
+    "situacaoCurso": null,
+    "estadoCivil": "SOLTEIRO",
+    "nacionalidade": "Brasil",
+    "naturalidade": "3550308",
+    "tempoPercursoOnibus": null,
+    "tempoPercursoBicicleta": null,
+    "contatos": {
+      "emails": [{
+        "email": "luabertevelli02@gmail.com",
+        "principal": false
+      }, {
+        "email": "luanabertevelli02@hotmail.com",
+        "principal": false
+      }],
+      "telefones": []
+    },
+    "cep": "04184000",
+    "enem": {
+      "media": null,
+      "ano": null
+    },
+    "redacao": {
+      "titulo": null,
+      "dataUltimaRedacao": null
+    },
+    "conhecimentos": [{
+      "ferramenta": "WORD",
+      "tipo": "TEXTO",
+      "nivel": "BASICO"
+    }, {
+      "ferramenta": "POWERPOINT",
+      "tipo": "APRESENTACAO",
+      "nivel": "BASICO"
+    }, {
+      "ferramenta": "EXCEL",
+      "tipo": "PLANILHA",
+      "nivel": "BASICO"
+    }],
+    "conhecimentosDiversos": [{
+      "nomeCurso": "INTERNET",
+      "nomeEscola": null,
+      "cargaHoraria": 0
+    }],
+    "idiomas": [],
+    "experienciasProfissional": [],
+    "informacoesVoluntariado": [],
+    "laudoValido": null,
+    "laudo": {
+      "validadeLaudo": null,
+      "validoCota": null
+    },
+    "cota": false,
+    "recursoAcessibilidades": [],
+    "acessibilidadeLocal": null,
+    "cids": []
+  }

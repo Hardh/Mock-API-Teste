@@ -1,0 +1,265 @@
+<div class="row item">
+  <div class="cardLista col-md-12 col-sm-12 col-xs-12" role="main">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-12">
+                <label class="nome">{{ candidato.codigoNome }}</label>
+                <img *ngIf="!favorito()" src="assets/img/love-it-off@2x.png" class="favoritoIcon pull-right"
+                  (click)="favoritar(candidato)">
+                <img *ngIf="favorito()" src="assets/img/love-it-on@2x.png" class="favoritoIcon pull-right"
+                  (click)="favoritar(candidato)">
+              </div>
+            </div>
+            <div class="row infoPerfil">
+              <div class="col-md-2">
+                <img src="assets/img/user@2x.png" class="imgPerfil">
+              </div>
+              <div class="col-md-10 info">
+                <span>Nascimento {{ candidato.dataNascimento | date: 'dd/MM/yyyy' }}</span><br>
+                <img src="assets/img/pin@2x.png" class="imgPin">
+                <span>Distânica aproximada</span>
+                <strong>{{ candidato.distanciaAprox }}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row padding-bottom-10">
+          <!-- Bloco de dados escolares não logado -->
+          <div class="col-md-12 infoAdicionais" *ngIf="nivelPerfil >= 0 && !expandir">
+            <div class="row">
+              <div class="col-md-12">
+                <label>Curso</label>
+                <strong>{{ candidato.escolaridade?.nomeCurso}}</strong>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label>Ano ou semestre</label>
+                <strong>{{ candidato.escolaridade?.periodoAtual }} semestre</strong>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label>Período de estudo</label>
+                <strong>{{ candidato.escolaridade?.periodoEstudo }}</strong>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label>Conclusão prevista</label>
+                <strong>{{ candidato.escolaridade?.conclusaoPrevista | date: 'dd/MM/yyyy' }}</strong>
+              </div>
+            </div>
+          </div>
+          <!-- Bloco de dados escolares -->
+          <div class="col-md-6 infoAdicionais" *ngIf="nivelPerfil >= 1 && expandir">
+            <!-- Bloco responável por exibir informações de estudante qualquer User -->
+            <div class="row titulo">
+              <div class="col-md-12">
+                <strong>Dados Escolares</strong>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label>Nível de escolaridade </label> <strong>{{ candidato.escolaridade?.nivelEscolaridade }}</strong>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label>Status do curso </label> <strong>{{ candidato.escolaridade?.situacaoEscolaridade }}</strong>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label>Curso</label> <strong>{{ candidato.escolaridade?.nomeCurso}}</strong>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label>Ano ou semestre</label> <strong>{{ candidato.escolaridade?.periodoAtual }} semestre</strong>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label>Período de estudo</label> <strong>{{ candidato.escolaridade?.periodoEstudo }}</strong>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label>Conclusão prevista</label> <strong>{{ candidato.escolaridade?.conclusaoPrevista | date:
+                  'dd/MM/yyyy' }}</strong>
+              </div>
+            </div>
+          </div>
+          <!-- Bloco de endereço -->
+          <div class="col-md-6 infoAdicionais" *ngIf="nivelPerfil >= 1 && expandir">
+            <div class="row titulo">
+              <div class="col-md-12">
+                <strong>Endereço</strong>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label>Município - UF</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <strong>{{ candidato.endereco?.cidade }} - {{ candidato.endereco?.uf }}</strong>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label>Tempo de percurso</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <strong>Ônibus - {{ candidato.tempoPercursoOnibus }}</strong>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <strong>Bicicleta - {{ candidato.tempoPercursoBicicleta }}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row padding-bottom-10">
+          <!-- Informações Bck Vagas -->
+          <div class="col-md-6 infoAdicionais" *ngIf="nivelPerfil >= 2 && expandir">
+            <div class="row titulo">
+              <div class="col-md-12">
+                <strong>Dados pessoais</strong>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label>Nome do estudante</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <strong>{{ candidato.nomeEstudante }}</strong>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label>Nome social</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <strong>{{ candidato.nomeSocialEstudante }}</strong>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label>CEP</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <strong>{{ candidato.endereco?.cep }}</strong>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label>Contato</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <strong>{{ contato }}</strong>
+              </div>
+              <!-- TODO: Validar o que é pra ser exibido -->
+            </div>
+          </div>
+          <!-- Informações Bck PCD -->
+          <div class="col-md-6 infoAdicionais" *ngIf="nivelPerfil >= 3 && expandir">
+            <div class="row titulo">
+              <div class="col-md-12">
+                <strong>Estudante PCD</strong>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label>Validade do Laudo</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <strong>{{ candidato.laudo?.validadeLaudo }}</strong>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label>Válido para Cota</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <strong>{{ candidato.laudo?.validoCota ? 'SIM' : 'NÃO' }}</strong>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label>Recursos de acessibilidade</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <strong>{{ equipamento }}</strong>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label>Tipo de deficiência</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <strong>{{ candidato.tipoDeficiencia }}</strong>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label>Necessita de acessibilidade no local?</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <strong>{{ candidato.acessibilidadeLocal ? 'SIM' : 'NÃO' }}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="row" *ngIf="nivelPerfil >= 1">
+          <div class="col-xs-12 pull-right" *ngIf="!expandir">
+            <img src="assets/img/expande-off@2x.png" alt="Expandir cartão" class="btnRecolherExpandir pull-right"
+              (click)="expandirRecolher()">
+            <span class="pull-right">expandir</span>
+          </div>
+          <div class="col-xs-12 pull-right" *ngIf="expandir">
+            <img src="assets/img/expande-on@2x.png" alt="Recolher cartão" class="btnRecolherExpandir pull-right"
+              (click)="expandirRecolher()">
+            <span class="pull-right">recolher</span>
+          </div>
+        </div>
+        <div class="row">
+          <app-rodape-cartao-backoffice class="col-md-12" [candidato]="candidato" [isLoading]='isLoading'
+            [habilitarComparar]='true' (selecionar)="selecionarCandidato($event)" (comparar)="compararCandidato($event)"
+            (visualizar)='visualizarCandidato($event)' [perfilCandidato]="perfilCandidato" [lista]="true">
+          </app-rodape-cartao-backoffice>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

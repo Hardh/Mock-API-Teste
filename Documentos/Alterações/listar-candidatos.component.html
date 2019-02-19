@@ -1,0 +1,370 @@
+<app-cabecalho-candidatos 
+  [mostrarVoltar]="true" 
+  [titulo]="'Resultado da Busca de Candidatos'"
+  (acaoBotao)="acaoBotao()"
+  [textoBotao]="textoAcaoBotao"
+  [classeBotao]="classeAcaoBotao">
+</app-cabecalho-candidatos>
+<div class="listar-candidatos">
+  <div 
+    class="row"
+    [class.visao-mapa]="tipoVisualizacao === TipoVisualizacaoEnum.Mapa">
+    <div 
+      class="col-xs-12 col-md-3 col-md-push-9 zona-filtro"
+      [class.hidden]="!mostrarFiltro">
+      <div *ngIf="!cacheDataService?.perfilAprendiz">
+        <app-filtros-basicos
+          *ngIf="!usuarioLogado"
+          [(mostrarFiltro)]="mostrarFiltro"
+          [filtros]="filtros"
+          (aplicarFiltrosEmit)="aplicarFiltros()">
+        </app-filtros-basicos>
+        <app-filtros-empresa
+          *ngIf="backOfficeEmpresa && !admin"
+          [(mostrarFiltro)]="mostrarFiltro"
+          [filtros]="filtros"
+          (aplicarFiltrosEmit)="aplicarFiltros()">
+        </app-filtros-empresa>
+        <app-filtros-backoffice
+          *ngIf="(backOfficeVagas || backOfficePCDVagas || admin) && mostrarFiltro"
+          [(mostrarFiltro)]="mostrarFiltro"
+          [filtros]="filtros"
+          (aplicarFiltrosEmit)="aplicarFiltros()">
+        </app-filtros-backoffice>
+      </div>
+      <div *ngIf="cacheDataService?.perfilAprendiz">
+        <app-filtros-basicos-aprendiz
+          *ngIf="!usuarioLogado"
+          [(mostrarFiltro)]="mostrarFiltro"
+          [filtros]="filtros"
+          (aplicarFiltrosEmit)="aplicarFiltros()">
+        </app-filtros-basicos-aprendiz>
+        <app-filtros-empresa-aprendiz
+          *ngIf="backOfficeEmpresa && !admin"
+          [(mostrarFiltro)]="mostrarFiltro"
+          [filtros]="filtros"
+          (aplicarFiltrosEmit)="aplicarFiltros()">
+        </app-filtros-empresa-aprendiz>
+        <app-filtros-backoffice-aprendiz
+          *ngIf="(backOfficeVagas || backOfficePCDVagas || admin) && mostrarFiltro"
+          [(mostrarFiltro)]="mostrarFiltro"
+          [filtros]="filtros"
+          (aplicarFiltrosEmit)="aplicarFiltros()">
+        </app-filtros-backoffice-aprendiz>
+      </div>
+    </div>
+    <div 
+      class="col-xs-12 zona-listagem"
+      [class.col-md-pull-3]="mostrarFiltro"
+      [class.col-md-8]="tipoVisualizacao === TipoVisualizacaoEnum.Mapa"
+      [class.col-md-9]="tipoVisualizacao !==  TipoVisualizacaoEnum.Mapa && mostrarFiltro"
+      [class.col-md-12]="tipoVisualizacao !==  TipoVisualizacaoEnum.Mapa && !mostrarFiltro">
+      <div class="box tab-pane-wrap">
+        <div class="row">
+          <div class="col-sm-12">
+            <ul class="list-inline tabs">
+              <li 
+                class="tab" 
+                [class.activo]="painelAtivo === PainelAtivoEnum.Buscados">
+                <button 
+                  aria-label="Aba de candidatos buscados" 
+                  class="btn tab-label" role="button" 
+                  (click)="mostrarPainel(PainelAtivoEnum.Buscados)">
+                  Candidatos Buscados
+                </button>
+              </li>
+              <li 
+                class="tab" 
+                [class.activo]="painelAtivo === PainelAtivoEnum.Selecionados"
+                *ngIf="cacheDataService?.obterListaLCS()?.length >= 1">
+                <button 
+                  aria-label="Aba de candidatos selecionados" 
+                  class="btn tab-label" 
+                  role="button"  
+                  (click)="mostrarPainel(PainelAtivoEnum.Selecionados)">
+                  Candidatos Selecionados
+                </button>
+              </li>
+              <li class="tab-botoes">
+                <div 
+                  *ngIf="painelAtivo !== PainelAtivoEnum.Selecionados"
+                  class="botoes-visualizacao hidden-sm hidden-xs">
+                  <label>Visualizar</label>
+                  <div class="container-botoes">
+                    <i
+                      [class.selecionado]="tipoVisualizacao === TipoVisualizacaoEnum.Lista"
+                      class="ciee-layout-bullets"
+                      (click)="tipoVisualizacao = TipoVisualizacaoEnum.Lista"
+                      title="Modo lista">
+                    </i>
+                    <i
+                      [class.selecionado]="tipoVisualizacao === TipoVisualizacaoEnum.Cartoes"
+                      class="ciee-layout-module-1"
+                      (click)="tipoVisualizacao = TipoVisualizacaoEnum.Cartoes"
+                      title="Modo cartões">
+                    </i>
+                    <i
+                      *ngIf="!(painelAtivo === PainelAtivoEnum.Selecionados)"
+                      [class.selecionado]="tipoVisualizacao === TipoVisualizacaoEnum.Mapa"
+                      class="ciee-maps-pin-1"
+                      (click)="tipoVisualizacao = TipoVisualizacaoEnum.Mapa"
+                      title="Modo mapa">
+                    </i>
+                  </div>
+                </div>
+                <button
+                  *ngIf="!mostrarFiltro && !(painelAtivo === PainelAtivoEnum.Selecionados)"
+                  class="botao-filtro"
+                  (click)="mostrarFiltro = !mostrarFiltro">
+                  <i class="ciee-filter-text margin-right-5"></i>Filtrar
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- Inicio seleção para abertura de vagas -->
+        <div 
+          class="row pane-candidatos-selecionados" 
+          *ngIf="painelAtivo === PainelAtivoEnum.Selecionados"
+          [ngStyle]="{'padding-bottom': paddingBottomListaCards }" >
+          <div 
+            class="col-md-12" 
+            *ngIf="cacheDataService?.areaProfissionalParaAberturaVaga">
+            <h3 class="area-pro-title" >Área Profissional - {{ cacheDataService?.areaProfissionalParaAberturaVaga?.descricao}}</h3>
+            <p *ngIf="cacheDataService?.listaLCS.length >= 1">
+              Exibindo <b>{{ (cacheDataService.listaLCS.length < 9 ? '0': '') + cacheDataService?.listaLCS.length }} </b>candidatos com o mesmo perfil de Área Profissional . Selecione <b>“Abrir vaga agora”</b>,  para prosseguirmos com a abertura da vaga.
+            </p>
+          </div>
+          <div
+            class="col-xs-12 cartao {{
+              tipoVisualizacao === 'CARTOES'
+                ? mostrarFiltro
+                  ? 'col-md-4 col-sm-4'
+                  : 'col-md-3 col-sm-4'
+                : 'col-md-4 col-sm-4'
+            }}"
+            [ngClass]="{'selecao-desabilitada': !cartao['habilitarSelecaoCardParaAberturaVaga']}"
+            *ngFor="let cartao of cacheDataService.listaLCS; let i = index;">
+            <app-card-pesquisa *ngIf="!backOfficeEmpresa && !backOfficeVagas && !backOfficePCDVagas" [candidato]="cartao"
+              [habilitarSelecaoParaAberturaVaga]="cartao['habilitarSelecaoCardParaAberturaVaga']  && (painelAtivo === 'candidatos-selecionados')"
+              [habilitarComparar]="false"
+              (selecionarParaAberturaVaga)="toggleParaAberturaVaga(cartao)"
+              (favoritar)="favoritarCandidato($event)"
+              (selecionar)="selecionarCandidato($event, true)"
+              (comparar)="compararCandidato($event)"
+              (visualizar)="visualizarCandidato($event)"
+              [perfilCandidato]="perfil"
+            >
+            </app-card-pesquisa>
+            <app-card-pesquisa-backoffice
+              *ngIf="backOfficeEmpresa || backOfficeVagas || backOfficePCDVagas"
+              [index]="i"
+              [quantidadeCards]="cacheDataService.listaLCS.length"
+              [habilitarSelecaoParaAberturaVaga]="cartao['habilitarSelecaoCardParaAberturaVaga'] && (painelAtivo === 'candidatos-selecionados')"
+              [habilitarComparar]="false"
+              (selecionarParaAberturaVaga)="toggleParaAberturaVaga(cartao)"
+              [candidato]="cartao"
+              [pcd]="backOfficePCDVagas"
+              [empresa]="backOfficeEmpresa"
+              [backofficeVagas]="backOfficeVagas"
+              (selecionar)="selecionarCandidato($event, true)"
+              (comparar)="compararCandidato($event)"
+              (visualizar)="visualizarCandidato($event)"
+              (favoritar)="favoritarCandidato($event)"
+              [perfilCandidato]="perfil"
+            ></app-card-pesquisa-backoffice>
+          </div>
+          <app-carrossel-filtros-aprendiz
+            (verificarLogado)="abrirModalAberturaVaga()"
+            *ngIf="perfilSelecionado == 'A'"
+            [expandido]="PainelAtivoEnum.Selecionados"
+            (atualizarAlturaLista)="atualizaAltura($event)">
+          </app-carrossel-filtros-aprendiz>
+          <div class="row">
+            <app-candidatos-selecionados
+              (verificarLogado)="abrirModalAberturaVaga()"
+              *ngIf="perfilSelecionado == 'E'"
+              [expandido]="PainelAtivoEnum.Selecionados"
+              (atualizarAlturaLista)="atualizaAltura($event)">
+            </app-candidatos-selecionados>
+          </div>
+        </div>
+        <!-- Final seleção para abertura de vagas -->
+        <div *ngIf="painelAtivo === 'candidatos-buscados'">
+          <div
+            class="row separator-linhas msg-sem-resuldado"
+            *ngIf="total === 0 && !isLoading">
+            <div class="col-md-12 text-center">
+              No momento, não encontramos candidatos para a busca realizada.
+              Ajuste os filtros para nova pesquisa.
+            </div>
+          </div>
+          <div class="col-md-12 margin-bottom-20 text-center loading" *ngIf="isLoading">
+            <i class="fa fa-circle-o-notch fa-spin"></i> Carregando...
+          </div>
+          <div *ngIf="(tipoVisualizacao === 'LISTA' && total > 0) && !isLoading" class="row" role="list">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="row" *ngFor="let candidato of listaCandidatos">
+                <app-lista-candidatos-estagio  
+                  class="col-md-12 col-sm-12 col-xs-12"
+                  [candidato]="candidato" 
+                  [tipoUsuarioLogado]="tipoUsuarioLogado"
+                  [perfilCandidato]="perfil"
+                  (favoritarCandidatoEmitter)="favoritarCandidato($event)" 
+                  (comparar)="compararCandidato($event)"
+                  (visualizar)="visualizarCandidato($event)" 
+                  (selecionar)="selecionarCandidato($event)" 
+                >
+                </app-lista-candidatos-estagio>
+              </div>
+            </div>
+            <div
+              *ngIf="total > 0"
+              class="col-md-12 col-sm-12 col-xs-12 paginacao"
+            >
+              <form [formGroup]="formPaginacao">
+                <div class="col-md-6 col-sm-6 col-xs-12 paginacao-blocos">
+                  <span>Itens por página:</span>
+                  <select formControlName="itensPorPagina" (change)="aplicarFiltros()">
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                  </select>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12 pull-right ajusta-padding">
+                  <div (click)="proximaPagina()" class="col-md-2 col-sm-2 col-xs-2 cursor-pointer paginacao-navegacao pull-right">
+                    <i class="fa fa-angle-right"></i>
+                  </div>
+
+                  <div class="col-md-2 col-sm-2 col-xs-2 paginacao-navegacao pull-right">
+                    <input
+                      type="text"
+                      formControlName="pagina"
+                      size="2"
+                      readonly="readonly"
+                      class="input-paginacao"
+                      value="{{pagina + 1}}"
+                    >
+                  </div>
+                  <div (click)="paginaAnterior()" class="col-md-2 col-sm-2 col-xs-2 cursor-pointer paginacao-navegacao pull-right">
+                    <i class="fa fa-angle-left"></i>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="row separador-linhas lst-cards" 
+            *ngIf="tipoVisualizacao !== 'LISTA' && total > 0">
+            <div
+              class="col-xs-12 cartao {{
+                tipoVisualizacao === 'CARTOES'
+                  ? mostrarFiltro
+                    ? 'col-md-4 col-sm-4'
+                    : 'col-md-3 col-sm-4'
+                  : 'col-md-4 col-sm-4'
+              }}"
+              *ngFor="let cartao of listaCandidatos; let i = index;"
+            >
+              <app-card-pesquisa
+                *ngIf="!backOfficeEmpresa && !backOfficeVagas && !backOfficePCDVagas"
+                [candidato]="cartao"
+                (favoritar)="favoritarCandidato($event)"
+                [habilitarSelecaoParaAberturaVaga]="cartao['habilitarSelecaoCardParaAberturaVaga'] && (painelAtivo === 'candidatos-selecionados')"
+                (selecionar)="selecionarCandidato($event)"
+                (comparar)="compararCandidato($event)"
+                (visualizar)="visualizarCandidato($event)"
+                [perfilCandidato]="perfil"
+              ></app-card-pesquisa>
+              <app-card-pesquisa-backoffice
+                *ngIf="backOfficeEmpresa || backOfficeVagas || backOfficePCDVagas"
+                [index]="i"
+                [quantidadeCards]="listaCandidatos.length"
+                [candidato]="cartao"
+                [pcd]="backOfficePCDVagas"
+                [habilitarSelecaoParaAberturaVaga]="cartao['habilitarSelecaoCardParaAberturaVaga'] && (painelAtivo === 'candidatos-selecionados')"
+                [empresa]="backOfficeEmpresa"
+                [backofficeVagas]="backOfficeVagas"
+                (selecionar)="selecionarCandidato($event)"
+                (comparar)="compararCandidato($event)"
+                (visualizar)="visualizarCandidato($event)"
+                (favoritar)="favoritarCandidato($event)"
+                [perfilCandidato]="perfil"
+              ></app-card-pesquisa-backoffice>
+            </div>
+            <div
+              *ngIf="total > 0"
+              class="col-md-12 col-sm-12 col-xs-12 paginacao"
+            >
+              <form [formGroup]="formPaginacao">
+                <div class="col-md-6 col-sm-6 col-xs-12 paginacao-blocos">
+                  <span>Itens por página:</span>
+                  <select formControlName="itensPorPagina" (change)="aplicarFiltros()">
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                  </select>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12 pull-right ajusta-padding">
+                  <div (click)="proximaPagina()" class="col-md-2 col-sm-2 col-xs-2 cursor-pointer paginacao-navegacao pull-right">
+                    <i class="fa fa-angle-right"></i>
+                  </div>
+
+                  <div class="col-md-2 col-sm-2 col-xs-2 paginacao-navegacao pull-right">
+                    <input
+                      type="text"
+                      formControlName="pagina"
+                      size="2"
+                      readonly="readonly"
+                      class="input-paginacao"
+                      value="{{pagina + 1}}"
+                    >
+                  </div>
+                  <div (click)="paginaAnterior()" class="col-md-2 col-sm-2 col-xs-2 paginacao-navegacao cursor-pointer pull-right">
+                    <i class="fa fa-angle-left"></i>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        *ngIf="tipoVisualizacao === TipoVisualizacaoEnum.Mapa"
+        class="zona-mapa hidden-sm hidden-xs"
+      >
+        <app-mapa-estudantes [latForm]="latForm" [lngForm]="lngForm" [geohashForm]="geohash"></app-mapa-estudantes>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<app-modal-captura-usuario
+  #modalCapturaUsuarioComponent
+></app-modal-captura-usuario>
+
+<app-modal-acesso-restrito #acessoRestrito></app-modal-acesso-restrito>
+
+<app-modal ng-tabindex="-1" #visualizarCVModal [idModal]="visualizarCVModal" [modalConfirmation]="false"
+      [hasHeader]="false" [hasDefaultFooter]="false" [tema]="'vagas'" [headerClose]="true" [classeTamanho]="'modal-lg'" (fecharEmitter)="fecharModalVisualizarCV($event)">
+      <app-visualizar-curriculo (compararCandidato)="compararCandidato($event)" [latitudeRef]="latForm" [longitudeRef]="lngForm" (favoritarCandidato)="favoritarCandidato($event)" class="row" [idCandidato]="idCandidatoSelecionado" (fecharModal)="fecharModalVisualizarCV()"></app-visualizar-curriculo>
+    </app-modal>
+
+<div *ngIf="listaCandidatosComparar.length > 0 && painelAtivo === 'candidatos-buscados'" class="row">
+  <div class="col-xs-12">
+    <app-carrossel-candidatos-comparar
+      [listaCandidatosComparar]="listaCandidatosComparar"
+      (compararCandidatoEmitter)="compararCandidato($event)"
+    ></app-carrossel-candidatos-comparar>
+  </div>
+</div>
+
+<app-alerta-erro
+  [(mensagem)]="mensagemErro"
+  [mostrar]="mensagemErro">
+</app-alerta-erro>
+<app-alerta-aviso
+  [(mensagem)]="mensagemAviso"
+  [mostrar]="mensagemAviso">
+</app-alerta-aviso>

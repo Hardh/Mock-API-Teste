@@ -1,0 +1,84 @@
+@import 'src/app/shared/styles/variables';
+
+.item {
+  padding: 0px 10px;
+  margin-bottom: 10px;
+}
+
+.cardLista {
+  border: 1px solid $color-lavender-gray;
+  border-left: 4px solid $color-orange-dark;
+  background-color: $cinza-claro-card;
+  padding: 24px;
+}
+
+.nome {
+  color: $color-marine-blue-two;
+  font-family: $font-family-open-sans;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.imgPerfil {
+  height: 35px;
+  width: 35px;
+}
+
+.imgPin {
+  height: 12px;
+  width: 9.79px;
+  margin-right: 5px;
+}
+
+.infoPerfil {
+  margin-top: 16px;
+}
+
+.info {
+  font-family: $font-family-open-sans;
+  font-size: 15px;
+}
+
+.padding-bottom-10 {
+  padding-bottom: 10px;
+}
+
+.infoAdicionais {
+  background-color: $color-white;
+
+  label {
+    color: $color-blue-dark-deep;
+    font-family: $font-family-open-sans;
+    font-size: 15px;
+    padding-right: 0px;
+    font-weight: 100;
+  }
+
+  strong {
+    color: $color-blue-dark-deep;
+    font-family: $font-family-open-sans;
+    font-size: 15px;
+  }
+
+  .titulo {
+    strong {
+      color: $color-texto-mapa;
+    }
+
+    margin-bottom: 8px;
+  }
+}
+
+
+.favoritoIcon {
+  height: 20.17px;
+  width: 23.44px;
+  cursor: pointer;
+}
+
+.btnRecolherExpandir {
+  height: 23px;
+  width: 23px;
+  margin-left: 5px;
+  cursor: pointer;
+}

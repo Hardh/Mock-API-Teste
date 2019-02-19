@@ -1,0 +1,31 @@
+{
+  "content": [{
+    "pequenaDescricao": "Agrupamento 1",
+    "id": 1
+  }, {
+    "pequenaDescricao": "Agrupamento 1",
+    "id": 2
+  }],
+  "pageable": {
+    "sort": {
+      "sorted": false,
+      "unsorted": true
+    },
+    "pageNumber": 0,
+    "pageSize": 20,
+    "offset": 0,
+    "unpaged": false,
+    "paged": true
+  },
+  "totalPages": 1,
+  "last": true,
+  "totalElements": 2,
+  "first": true,
+  "sort": {
+    "sorted": false,
+    "unsorted": true
+  },
+  "numberOfElements": 2,
+  "size": 20,
+  "number": 0
+}

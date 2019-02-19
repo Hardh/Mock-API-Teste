@@ -1,0 +1,10 @@
+Documento de rascunho.
+
+  1 - Task de Listar parametros IE: PK-7582
+      https://cieebr.atlassian.net/browse/PK-5999
+      https://cieebr.atlassian.net/browse/PK-7582
+      https://cieebr.atlassian.net/wiki/spaces/KAIR/pages/631537952/Visualizar+Par+metros+IE?src=jira
+      https://projects.invisionapp.com/d/main#/console/16473483/341590914/preview
+      https://projects.invisionapp.com/d/main#/console/16473483/341590917/preview
+
+  2 - Task de pendente Acessibilidade: PK-7585

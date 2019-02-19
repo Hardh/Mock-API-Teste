@@ -1,0 +1,79 @@
+// https://api.dev1.ciee.org.br/student/vagas/candidatos/pesquisar/377079?longitudeRef=-46.603659300000004&latitudeRef=-23.57824459999999
+{
+  "id": 10783133,
+  "codigoNome": "D4683876",
+  "dataNascimento": "1992-02-27",
+  "distanciaAprox": "< 5km",
+  "favorito": false,
+  "escolaridade": {
+    "nomeCurso": "TECNICO EM AGROPECUARIA",
+    "codigoEscola": 18429,
+    "nomeEscola": "ETEC BENEDITO STORANI",
+    "duracao": 4,
+    "situacaoEscolaridade": "CURSANDO",
+    "descricaoPeriodo": "Semestral",
+    "periodoAtual": 4,
+    "periodoEstudo": "Tarde",
+    "conclusaoPrevista": null,
+    "dataConclusao": null,
+    "statusCurso": "CURSANDO",
+    "nivelEscolaridade": "TE",
+    "horario": null
+  },
+  "relevanciaIdioma": null,
+  "relevanciaConhecimento": null,
+  "resumoArea": null,
+  "localidade": null,
+  "dataAlteracao": null,
+  "rotas": null,
+  "estudanteIndicadoPCD": null,
+  "tipoDeficiencia": null,
+  "nomeEstudante": "DEBORA FERNANDA DE SOUZA",
+  "nomeSocialEstudante": null,
+  "endereco": {
+    "cep": "07700000",
+    "rua": "RUA AGOSTINHO DE SOUZA 19",
+    "numero": " ",
+    "complemento": null,
+    "bairro": "MORRO GRANDE",
+    "municipio": "Caieiras",
+    "uf": "SP"
+  },
+  "distanciaCalculada": 4.977022473925935,
+  "situacaoCurso": null,
+  "estadoCivil": "SOLTEIRO",
+  "nacionalidade": "Brasil",
+  "naturalidade": "3550308",
+  "tempoPercursoOnibus": "44 minutos",
+  "tempoPercursoBicicleta": "23 minutos",
+  "contatos": {
+    "emails": [{
+      "email": "d3bora_f3rnanda@hotmail.com",
+      "principal": false
+    }],
+    "telefones": []
+  },
+  "cep": "07700000",
+  "enem": {
+    "media": null,
+    "ano": null
+  },
+  "redacao": {
+    "titulo": null,
+    "dataUltimaRedacao": null
+  },
+  "conhecimentos": [],
+  "conhecimentosDiversos": [],
+  "idiomas": [],
+  "experienciasProfissional": [],
+  "informacoesVoluntariado": [],
+  "laudoValido": null,
+  "laudo": {
+    "validadeLaudo": null,
+    "validoCota": null
+  },
+  "cota": false,
+  "recursoAcessibilidades": [],
+  "acessibilidadeLocal": null,
+  "cids": []
+}

@@ -1,0 +1,9 @@
+src/app/core/ciee-vagas/cache-data/cache-data.service.ts
+src/app/core/ciee-vagas/cartao/cartao-pesquisa.service.ts
+src/app/vagas/buscar-candidatos/componentes/lista-candidatos-estagio/lista-candidatos-estagio.component.html
+src/app/vagas/buscar-candidatos/componentes/lista-candidatos-estagio/lista-candidatos-estagio.component.scss
+src/app/vagas/buscar-candidatos/componentes/lista-candidatos-estagio/lista-candidatos-estagio.component.ts
+src/app/vagas/buscar-candidatos/paginas/candidatos-favoritos/candidatos-favoritos.component.html
+src/app/vagas/buscar-candidatos/paginas/candidatos-favoritos/candidatos-favoritos.component.ts
+src/app/vagas/buscar-candidatos/paginas/listar-candidatos/listar-candidatos.component.html
+src/app/vagas/buscar-candidatos/paginas/listar-candidatos/listar-candidatos.component.ts

@@ -1,0 +1,135 @@
+<app-cabecalho-pagina [titulo]="'Candidatos Favoritos'" [rota]="'/vagas/buscar-candidatos/candidatos-favoritos'"
+  [textoBotao]="'Abrir uma vaga'" [cssClass]="'btn-cadastrar'">
+</app-cabecalho-pagina>
+<div id="div-listar-candidatos" class="listar-candidatos">
+  <div class="row row-eq-height">
+    <div class="col-md-12">
+      <div class="zona-cartoes">
+        <div class="col-md-12 text-center loading" *ngIf="carregando">
+          <i class="fa fa-circle-o-notch fa-spin"></i> Carregando...
+        </div>
+        <div class="box pull-left tab-pane-wrap">
+          <ul class="list-inline tabs">
+            <li class="tab tab-botoes">
+              <div class="wrap-top-buttons">
+                <div class="botoes-visualizacao">
+                  <label>Visualizar</label>
+                  <div class="container-botoes">
+                    <i [class.selecionado]="tipoVisualizacao === 'LISTA'" class="fa ciee-layout-bullets" (click)="mudarVisualizacao('LISTA')"
+                      title="Modo lista"></i>
+                    <i [class.selecionado]="tipoVisualizacao === 'CARTOES'" class="fa ciee-layout-module-1" (click)="mudarVisualizacao('CARTOES')"
+                      title="Modo cartões"></i>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+
+          <div *ngIf="tipoVisualizacao === 'LISTA'" class="row" role="list">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="row" *ngFor="let candidato of listaFavoritos">
+                <app-lista-candidatos-estagio  
+                  class="col-md-12 col-sm-12 col-xs-12"
+                  [candidato]="candidato" 
+                  [tipoUsuarioLogado]="tipoUsuarioLogado"
+                  [perfilCandidato]="perfil"
+                  (favoritarCandidatoEmitter)="favoritarCandidato($event)" 
+                  (comparar)="compararCandidato($event)"
+                  (visualizar)="visualizarCandidato($event)" 
+                  (selecionar)="selecionarCandidato($event)" 
+                >
+                </app-lista-candidatos-estagio>
+              </div>
+              <div *ngIf="listaFavoritos.length > 0" class="col-md-12 col-sm-12 col-xs-12 paginacao">
+                <form [formGroup]="formPaginacao">
+                  <div class="col-md-6 col-sm-6 col-xs-12 paginacao-blocos">
+                    <span>Itens por página:</span>
+                    <select formControlName="itensPorPagina" (click)="mudarItensPagina($event)">
+                      <option value="20">20</option>
+                      <option value="30">30</option>
+                      <option value="40">40</option>
+                    </select>
+                    <span> | 1 - 20 de {{ listaFavoritos.length }} itens</span>
+                  </div>
+                  <div class="col-md-4 col-sm-6 col-xs-12 pull-right">
+                    <div class="col-md-6 col-sm-6 col-xs-6 paginacao-blocos paginacao-navegacao-geral">
+                      <span>1 de {{ qntPaginas }} páginas</span>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-2 paginacao-navegacao">
+                      <i class="fa fa-angle-left" (click)="paginaAnterior()"></i>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-2 paginacao-navegacao">
+                      <select formControlName="pagina" (onChange)="mudarPagina($event)">
+                        <option *ngFor="let pgn of paginas" value="pgn">{{
+                          pgn
+                          }}</option>
+                      </select>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-2 paginacao-navegacao">
+                      <i class="fa fa-angle-right" (click)="proximaPagina()"></i>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="tipoVisualizacao === 'CARTOES'" class="row separador-linhas lst-cards">
+            <div class="col-xs-12 cartao col-md-3 col-sm-3 ng-star-inserted" [class.cartao-desativado]="cartao?.selecionado"
+              *ngFor="let cartao of listaFavoritos; let i = index;">
+              <app-card-pesquisa-backoffice [quantidadeCards]="listaFavoritos.length" [index]="i" [mostrarDistancia]="false"
+                [candidato]="cartao" [pcd]="false" (selecionar)="selecionarCandidato($event)" (comparar)="compararCandidato($event)"
+                (visualizar)="visualizarCandidato($event)" (favoritar)="favoritarCandidato($event)" [perfilCandidato]="perfil"></app-card-pesquisa-backoffice>
+            </div>
+            <div *ngIf="listaFavoritos.length > 0" class="col-md-12 col-sm-12 col-xs-12 paginacao">
+              <form [formGroup]="formPaginacao">
+                <div class="col-md-6 col-sm-6 col-xs-12 paginacao-blocos">
+                  <span>Itens por página:</span>
+                  <select formControlName="itensPorPagina" (click)="mudarItensPagina($event)">
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                  </select>
+                  <span> | 1 - 20 de {{ listaFavoritos.length }} itens</span>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12 pull-right">
+                  <div class="col-md-6 col-sm-6 col-xs-6 paginacao-blocos paginacao-navegacao-geral">
+                    <span>1 de {{ qntPaginas }} páginas</span>
+                  </div>
+                  <div class="col-md-2 col-sm-2 col-xs-2 paginacao-navegacao">
+                    <i class="fa fa-angle-left" (click)="paginaAnterior()"></i>
+                  </div>
+                  <div class="col-md-2 col-sm-2 col-xs-2 paginacao-navegacao">
+                    <select formControlName="pagina" (onChange)="mudarPagina($event)">
+                      <option *ngFor="let pgn of paginas" value="pgn">{{
+                        pgn
+                        }}</option>
+                    </select>
+                  </div>
+                  <div class="col-md-2 col-sm-2 col-xs-2 paginacao-navegacao">
+                    <i class="fa fa-angle-right" (click)="proximaPagina()"></i>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-modal ng-tabindex="-1" #visualizarCVModal [idModal]="visualizarCVModal" [modalConfirmation]="false" [hasHeader]="false"
+  [hasDefaultFooter]="false" [tema]="'vagas'" [headerClose]="true" [classeTamanho]="'modal-lg'">
+  <app-visualizar-curriculo class="row" [idCandidato]="idCandidatoSelecionado" (fecharModal)="fecharModalVisualizarCV()">
+  </app-visualizar-curriculo>
+</app-modal>
+
+<div *ngIf="listaCandidatosComparar.length > 0" class="row">
+  <div class="col-xs-12">
+    <app-carrossel-candidatos-comparar [listaCandidatosComparar]="listaCandidatosComparar" (compararCandidatoEmitter)="compararCandidato($event)"></app-carrossel-candidatos-comparar>
+  </div>
+</div>
+
+<app-alerta-erro [(mensagem)]="mensagemErro" [mostrar]="mensagemErro"></app-alerta-erro>
+<app-alerta-aviso [(mensagem)]="mensagemAviso" [mostrar]="mensagemAviso"></app-alerta-aviso>

@@ -1,0 +1,20 @@
+Verificar se o repositorio remoto esta correto (Quando é SSH MUDA):
+  git remote -v
+
+Gerar uma chave e colocar a senha:
+  ssh-keygen -C "alisson.dias@iteris.com.br"
+
+Copiar a chave publica e adiciona no Bitbucket:
+  cat ~/.ssh/id_rsa.pub
+
+Startar o agente de SSH:
+   eval `ssh-agent` 
+
+Adicione a chave publica:
+  ssh-add ~/.ssh/id_rsa.pub 
+  ssh-add -l
+
+Após tomar o erro:
+  ssh_askpass: exec(/usr/bin/ssh-askpass): No such file or directory
+Use o comando:
+  ssh -T git@bitbucket.org

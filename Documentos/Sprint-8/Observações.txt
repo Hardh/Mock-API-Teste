@@ -1,0 +1,10 @@
+
+Estórias  Observações:
+  https://cieebr.atlassian.net/browse/PK-6833
+  https://cieebr.atlassian.net/wiki/spaces/KAIR/pages/620855669/Dashboard+de+Acompanhamento+Operacional
+  https://projects.invisionapp.com/share/WAQ8V8L6N94#/screens/343729843
+
+    A idéia é que o filtro seja reutilizável, sendo que o multselect seja reutilizável e que cada opção seja um componente diferente,
+    o que se aproveita é somente a casca;
+
+    Grid de detalhe de vagas tem um botão de ação ou click na linha;
